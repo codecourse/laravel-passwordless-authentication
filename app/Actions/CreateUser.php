@@ -27,9 +27,11 @@ class CreateUser
         ]);
     }
 
-    public function asController(ActionRequest $request)
+    public function asController(ActionRequest $request, SendMagicLink $sendMagicLink)
     {
-        $this->handle($request->email, $request->name);
+        $user = $this->handle($request->email, $request->name);
+
+        $sendMagicLink->handle($user->email);
 
         return back()->with('success', 'Registered. Check your email address for a login link.');
     }
