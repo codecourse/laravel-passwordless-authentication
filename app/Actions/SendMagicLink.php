@@ -2,7 +2,9 @@
 
 namespace App\Actions;
 
+use App\Mail\MagicLoginLink;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -20,11 +22,13 @@ class SendMagicLink
 
     public function handle(string $email)
     {
-        dd('send email', $email);
+        Mail::to($email)->send(new MagicLoginLink());
     }
 
     public function asController(ActionRequest $request)
     {
         $this->handle($request->email);
+
+        return back()->with('success', 'Check your email for your magic login link');
     }
 }
