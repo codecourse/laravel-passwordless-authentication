@@ -10,6 +10,8 @@ class LoginController extends Controller
 {
     public function __invoke(User $user)
     {
-        dd('login', $user);
+        auth()->login($user);
+
+        return redirect()->route('home');
     }
 }
