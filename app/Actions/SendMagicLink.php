@@ -22,7 +22,7 @@ class SendMagicLink
 
     public function handle(string $email)
     {
-        Mail::to($email)->send(new MagicLoginLink());
+        Mail::to($email)->send(new MagicLoginLink($email));
     }
 
     public function asController(ActionRequest $request)
